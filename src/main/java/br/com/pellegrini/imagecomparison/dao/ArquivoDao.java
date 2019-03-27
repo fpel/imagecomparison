@@ -1,13 +1,17 @@
 package br.com.pellegrini.imagecomparison.dao;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import org.apache.log4j.Logger;
 
-import br.com.pellegrini.imagecomparison.main.Application;
 import br.com.pellegrini.imagecomparison.properties.ApplicationProperties;
 
 public class ArquivoDao implements FilenameFilter {
@@ -17,7 +21,7 @@ public class ArquivoDao implements FilenameFilter {
 //	private static final String TIPO_RODAPE = "FT";
 //	private static final String TIPO_CABECALHO = "FH";
 //	private static final String TIPO_DETALHE = "DR";
-	static Logger logger = Logger.getLogger(Application.class);
+	static Logger logger = Logger.getLogger(ArquivoDao.class);
 	private File diretorioInput;
 	private List<String> extFilter;
 	
@@ -40,7 +44,7 @@ public class ArquivoDao implements FilenameFilter {
 	/*
 	 * Carrega a lista de arquivos do diretorio input
 	 */
-	public List<String> carregarListaArquivosInput() {
+	public List<String> getFilesInput() {
 		logger.info("Carregando a lista de arquivos do diretorio: " + ApplicationProperties.getValue("dir.input"));
 		validaDiretorio(ApplicationProperties.getValue("dir.input"));
 		diretorioInput = new File(ApplicationProperties.getValue("dir.input"));
@@ -49,6 +53,30 @@ public class ArquivoDao implements FilenameFilter {
 		return lstRetorno;
 	}
 	
+	
+	
+	
+	public BufferedImage loadImage(String name) {
+		BufferedImage res = null;
+		InputStream is;
+		try {
+			// file = "diretório do seu arquivo/" + name;
+			File f = new File(name);
+			res = ImageIO.read(f);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	
+	public void saveImage(BufferedImage b) {
+		try {
+			ImageIO.write(b, "PNG", new File(""+b.getWidth() + ".png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	/*

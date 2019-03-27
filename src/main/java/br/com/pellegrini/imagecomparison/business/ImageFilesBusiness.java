@@ -1,36 +1,28 @@
 package br.com.pellegrini.imagecomparison.business;
 
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import br.com.pellegrini.imagecomparison.dao.ArquivoDao;
-import br.com.pellegrini.imagecomparison.main.Application;
+import br.com.pellegrini.imagecomparison.properties.ApplicationProperties;
 
 public class ImageFilesBusiness {
 
-	static Logger logger = Logger.getLogger(Application.class);
+	static Logger logger = Logger.getLogger(ImageFilesBusiness.class);
+	List<String> lstArquivos = new ArrayList<>();
+	ArquivoDao arquivoDao = new ArquivoDao();
 	
 	public ImageFilesBusiness() {}
 	
 	/*
 	 * 
 	 */
-	public void converterXlsToOut() {
+	public void loadFilesInput() {
 		
-		/*
-		 * carregar a lista de arquivos do diretorio
-		 * um-a-um
-		 *     ler o arquivo - ok
-		 *     carregar o conteudo do arquivo para o objeto (arquivo) - ok
-		 *     converte o objeto em arquivo texto OUT
-		 *     move o XLS para o backup
-		 *     vai para o proximo arquivo
-		 */
-		
-		
-		ArquivoDao arquivoDao = new ArquivoDao();
-		List<String> lstArquivos = arquivoDao.carregarListaArquivosInput();
+		lstArquivos = arquivoDao.getFilesInput();
 		
 		logger.debug("Quantidade de arquivos no diretorio: " + lstArquivos.size());
 		for (String nomeArquivo : lstArquivos) {
@@ -40,6 +32,20 @@ public class ImageFilesBusiness {
 //			arquivoDao.moveArquivoBackup(nomeArquivo);
 		}
 	}
+	
+	
+	
+	public void teste() {
+		String dir = ApplicationProperties.getValue("dir.input");
+		for (String nomeArquivo : lstArquivos) {
+			BufferedImage imagem = arquivoDao.loadImage(dir + "/" + nomeArquivo);
+			System.out.println(imagem);
+			arquivoDao.saveImage(imagem);
+		}
+		
+		
+	}
+	
 	
 	
 	

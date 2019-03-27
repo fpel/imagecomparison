@@ -23,7 +23,8 @@ public class Application {
 			ApplicationProperties.load();
 			
 			ImageFilesBusiness imageBS = new ImageFilesBusiness();
-			imageBS.converterXlsToOut();
+			imageBS.loadFilesInput();
+			imageBS.teste();
 			
 //			ConversorBusiness conversor = new ConversorBusiness();
 //			conversor.converterXlsToOut();

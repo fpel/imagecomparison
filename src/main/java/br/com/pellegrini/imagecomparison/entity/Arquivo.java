@@ -1,31 +1,32 @@
 package br.com.pellegrini.imagecomparison.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Arquivo {
-	private Cabecalho cabecalho;
-	private List<Detalhe> lstDetalhe;
-	private Rodape rodape;
-	public Cabecalho getCabecalho() {
-		return cabecalho;
+	private String name;
+	private String path;
+	public String getName() {
+		return name;
 	}
-	public void setCabecalho(Cabecalho cabecalho) {
-		this.cabecalho = cabecalho;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public List<Detalhe> getLstDetalhe() {
-		if (lstDetalhe==null)
-			lstDetalhe = new ArrayList<>();
-		return lstDetalhe;
+	public String getPath() {
+		return path;
 	}
-	public void setLstDetalhe(List<Detalhe> lstDetalhe) {
-		this.lstDetalhe = lstDetalhe;
-	}
-	public Rodape getRodape() {
-		return rodape;
-	}
-	public void setRodape(Rodape rodape) {
-		this.rodape = rodape;
+	public void setPath(String path) {
+		this.path = path;
 	}
 	
+	
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Arquivo [name=");
+		builder.append(name);
+		builder.append(", path=");
+		builder.append(path);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }
